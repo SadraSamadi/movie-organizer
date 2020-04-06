@@ -1,5 +1,2 @@
 /.idea
-/node_modules
-/dist
-/tmp
-/.env
+/venv
