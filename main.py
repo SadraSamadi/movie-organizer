@@ -34,11 +34,31 @@ def get_movie_id(file_info):
         'year': file_info.get('year')
     })
     data = response.json()
+    results = data['results']
     total_results = data['total_results']
     print('TOTAL RESULTS:', total_results)
     if total_results == 1:
-        result = data['results'][0]
-        return result['id']
+        return results[0]['id']
+    movie = None
+    if total_results == 0:
+        print('NO RESULT!!!')
+    else:
+        print('MULTIPLE RESULTS FOUND!')
+        for index, result in enumerate(results):
+            title = result['title']
+            date = result.get('release_date', '')
+            print(f'[{index:2}] ({date:10}) {title}')
+        movie_num = input('Enter the movie number: ')
+        if movie_num != '-':
+            index = int(movie_num)
+            movie = results[index]
+    if movie:
+        return movie['id']
+    else:
+        pass
+        movie_id = input('Enter the movie ID: ')
+        if movie_id != '-':
+            return int(movie_id)
 
 
 def get_movie_details(movie_id):
@@ -50,7 +70,7 @@ def get_movie_details(movie_id):
 
 
 def download_image(directory, file_name, image_path):
-    print('DOWNLOADING IMAGE:', directory, file_name)
+    print(f'DOWNLOADING IMAGE: {directory} [{file_name}]')
     if not image_path:
         return
     response = requests.get(f'{image_base_url}/original{image_path}', params={'api_key': api_key})
@@ -122,7 +142,7 @@ def main():
             })
         else:
             print('MOVIE NOT FOUND!!!')
-        print('-' * 80)
+        print('-' * 120)
 
 
 if __name__ == '__main__':
