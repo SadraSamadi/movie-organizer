@@ -1,22 +1,18 @@
 import shutil
 from datetime import datetime
-from json import JSONEncoder, dump
+from json import dump
 from os import listdir, path, mkdir
 
 import requests
 from guessit import guessit
+from guessit.jsonutils import GuessitEncoder
 from pathvalidate import sanitize_filename
 
-root = 'G:\\Videos\\Movies'
+# root = 'G:\\Videos\\Movies'
+root = 'D:\\Downloads'
 base_url = 'https://api.themoviedb.org/3'
 image_base_url = 'https://image.tmdb.org/t/p'
 api_key = 'c73f3083988325a968f198ad0956a3cd'
-
-
-class Serializer(JSONEncoder):
-
-    def default(self, o):
-        return str(o)
 
 
 def get_file_info():
@@ -115,7 +111,7 @@ def move_movie(parent, movie):
         mkdir(movie_dir)
         details_path = path.join(movie_dir, 'movie.json')
         with open(details_path, 'w') as f:
-            dump(movie, f, indent=2, cls=Serializer)
+            dump(movie, f, indent=2, cls=GuessitEncoder)
         download_image(movie_dir, 'backdrop', movie_details['backdrop_path'])
         download_image(movie_dir, 'poster', movie_details['poster_path'])
         original_file = path.join(root, file_name)
