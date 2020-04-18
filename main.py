@@ -51,7 +51,6 @@ def get_movie_id(file_info):
     if movie:
         return movie['id']
     else:
-        pass
         movie_id = input('Enter the movie ID: ')
         if movie_id != '-':
             return int(movie_id)
