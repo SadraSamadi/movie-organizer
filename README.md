@@ -1,3 +1,3 @@
-# Metaman
+# Movie Organizer
 
-Movie meta-data management using TMDB.
+Organize movie  files using TMDB.
